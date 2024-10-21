@@ -223,27 +223,37 @@ ob_start();
 							</li>
 							<li class="geex-content__header__quickaction__item">
 								<a href="#" class="geex-content__header__quickaction__link">
-									<img class="user-img" src="assets/img/avatar/user.svg" alt="user" />
+									<?php
+									session_start();
+									$imagePath = $_SESSION['imagePath'];
+									echo "<img class='user-img' src='assets/img/profile_pics/$imagePath' alt='user' />";
+									?>
 								</a>
 								<div class="geex-content__header__popup geex-content__header__popup--author">
 									<div class="geex-content__header__popup__header">
 										<div class="geex-content__header__popup__header__img">
-											<img src="assets/img/avatar/user.svg" alt="user" />
+											<?php
+											$imagePath = $_SESSION['imagePath'];
+											echo "<img src='assets/img/profile_pics/$imagePath' alt='user' />";
+											?>
 										</div>
 										<div class="geex-content__header__popup__header__content">
 											<?php
-											session_start();
 											$userEmail = '';
+											$userName = '';
+											$userSurname = '';
 											if (!isset($_SESSION['userEmail'])) {
 												header("Location: signin.php");
 												ob_end_flush();
 												exit;
 											} else {
+												$userName = $_SESSION['userName'];
+												$userSurname = $_SESSION['userSurname'];
 												$userEmail = $_SESSION['userEmail'];
-												echo "<h3 class='geex-content__header__popup__header__title'>$userEmail</h3>";
+												echo "<span class='geex-content__header__popup__header__subtitle'>$userName $userSurname</span>";
 											}
 											?>
-											<span class="geex-content__header__popup__header__subtitle">CEO, PixcelsThemes</span>
+
 										</div>
 									</div>
 									<div class="geex-content__header__popup__content">
@@ -388,7 +398,6 @@ ob_start();
 						<div class="geex-content__section__header">
 							<div class="geex-content__section__header__title-part">
 								<h4 class="geex-content__section__header__title">User Review</h4>
-								<p class="geex-content__section__header__subtitle">Eum fuga consequuntur ut et.</p>
 							</div>
 							<div class="geex-content__section__header__content-part">
 								<div class="geex-content__section__header__btn geex-content__section__header__swiper-btn">
@@ -404,105 +413,31 @@ ob_start();
 						<div class="geex-content__section__content">
 							<div class="swiper-container">
 								<div class="swiper-wrapper">
-									<div class="swiper-slide">
-										<div class="geex-content__review__single">
-											<div class="geex-content__review__single__header">
-												<div class="geex-content__review__single__header__img">
-													<img src="assets/img/testimonial/1.svg" alt="User" />
-												</div>
-												<div class="geex-content__review__single__header__text">
-													<h4 class="geex-content__review__single__header__title">John Doe</h4>
-													<p class="geex-content__review__single__header__subtitle">4 days ago</p>
-												</div>
-											</div>
-											<div class="geex-content__review__single__content">
-												<p class="geex-content__review__single__content__text">Ab architecto provident ex accusantium deserunt. Aut aspernatur deleniti sit maiores ut id cum accusamus. Beatae n</p>
-											</div>
-											<div class="geex-content__review__single__bottom">
-												<a href="#" class="geex-content__review__single__btn danger-color">Archive</a>
-												<a href="#" class="geex-content__review__single__btn success-color">Accept</a>
-											</div>
-										</div>
-									</div>
-									<div class="swiper-slide">
-										<div class="geex-content__review__single">
-											<div class="geex-content__review__single__header">
-												<div class="geex-content__review__single__header__img">
-													<img src="assets/img/testimonial/2.svg" alt="User" />
-												</div>
-												<div class="geex-content__review__single__header__text">
-													<h4 class="geex-content__review__single__header__title">Kevin Hunt</h4>
-													<p class="geex-content__review__single__header__subtitle">6 days ago</p>
-												</div>
-											</div>
-											<div class="geex-content__review__single__content">
-												<p class="geex-content__review__single__content__text">Ab architecto provident ex accusantium deserunt. Aut aspernatur deleniti sit maiores ut id cum accusamus. Beatae n</p>
-											</div>
-											<div class="geex-content__review__single__bottom">
-												<a href="#" class="geex-content__review__single__btn danger-color">Archive</a>
-												<a href="#" class="geex-content__review__single__btn success-color">Accept</a>
-											</div>
-										</div>
-									</div>
-									<div class="swiper-slide">
-										<div class="geex-content__review__single">
-											<div class="geex-content__review__single__header">
-												<div class="geex-content__review__single__header__img">
-													<img src="assets/img/testimonial/3.svg" alt="User" />
-												</div>
-												<div class="geex-content__review__single__header__text">
-													<h4 class="geex-content__review__single__header__title">Isabbelle</h4>
-													<p class="geex-content__review__single__header__subtitle">7 days ago</p>
-												</div>
-											</div>
-											<div class="geex-content__review__single__content">
-												<p class="geex-content__review__single__content__text">Ab architecto provident ex accusantium deserunt. Aut aspernatur deleniti sit maiores ut id cum accusamus. Beatae n</p>
-											</div>
-											<div class="geex-content__review__single__bottom">
-												<a href="#" class="geex-content__review__single__btn success-color">Publish <i class="uil-arrow-right"></i></a>
-											</div>
-										</div>
-									</div>
-									<div class="swiper-slide">
-										<div class="geex-content__review__single">
-											<div class="geex-content__review__single__header">
-												<div class="geex-content__review__single__header__img">
-													<img src="assets/img/testimonial/4.svg" alt="User" />
-												</div>
-												<div class="geex-content__review__single__header__text">
-													<h4 class="geex-content__review__single__header__title">Kevin Hunt</h4>
-													<p class="geex-content__review__single__header__subtitle">6 days ago</p>
-												</div>
-											</div>
-											<div class="geex-content__review__single__content">
-												<p class="geex-content__review__single__content__text">Ab architecto provident ex accusantium deserunt. Aut aspernatur deleniti sit maiores ut id cum accusamus. Beatae n</p>
-											</div>
-											<div class="geex-content__review__single__bottom">
-												<a href="#" class="geex-content__review__single__btn danger-color">Archive</a>
-												<a href="#" class="geex-content__review__single__btn success-color">Accept</a>
-											</div>
-										</div>
-									</div>
-									<div class="swiper-slide">
-										<div class="geex-content__review__single">
-											<div class="geex-content__review__single__header">
-												<div class="geex-content__review__single__header__img">
-													<img src="assets/img/testimonial/2.svg" alt="User" />
-												</div>
-												<div class="geex-content__review__single__header__text">
-													<h4 class="geex-content__review__single__header__title">Isabbelle</h4>
-													<p class="geex-content__review__single__header__subtitle">7 days ago</p>
-												</div>
-											</div>
-											<div class="geex-content__review__single__content">
-												<p class="geex-content__review__single__content__text">Ab architecto provident ex accusantium deserunt. Aut aspernatur deleniti sit maiores ut id cum accusamus. Beatae n</p>
-											</div>
-											<div class="geex-content__review__single__bottom">
-												<a href="#" class="geex-content__review__single__btn success-color">Publish <i class="uil-arrow-right"></i></a>
-											</div>
-										</div>
-									</div>
-									<!-- Add more slides as needed -->
+									<?php
+									include './partials/helpers.php';
+									$filePath = "data.csv";
+									$transactions = getTransactions($filePath);
+									foreach ($transactions as $transaction) {
+										$userName = $transaction['userName'];
+										$userSurname = $transaction['userSurname'];
+										$userPath = $transaction['imagePath'];
+										echo "<div class='swiper-slide'>";
+										echo "<div class='geex-content__review__single'>";
+										echo "<div class='geex-content__review__single__header'>";
+										echo "<div class='geex-content__review__single__header__img'>";
+										echo "	<img src='assets/img/profile_pics/$userPath' alt='User'  />";
+										echo "</div>";
+										echo "<div class='geex-content__review__single__header__text'>";
+										echo "	<h4 class='geex-content__review__single__header__title'>$userName $userSurname</h4>";
+										echo "</div>";
+										echo "</div>";
+										echo "<div class='geex-content__review__single__content'>";
+										echo "	<p class='geex-content__review__single__header__subtitle'>$userEmail</p>";
+										echo "</div>";
+										echo "</div>";
+										echo "</div>";
+									}
+									?>
 								</div>
 							</div>
 						</div>

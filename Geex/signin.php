@@ -70,21 +70,28 @@ ob_start();
 
 			include './partials/helpers.php';
 
-			$fileName = "data.csv";
-			$transactions = getTransactions($fileName);
+			$filePath = "data.csv";
+			$transactions = getTransactions($filePath);
+			$checked = false;
 
-			for ($i = 0; $i < count($transactions); $i++) {
-				$transaction = $transactions[$i];
+
+			foreach ($transactions as $transaction) {
+				print_r($transaction);
 				if ($transaction['userEmail'] === $userEmail) {
 					if (password_verify($password, $transaction['password'])) {
+						$checked = true;
 						$_SESSION['userEmail'] = $transaction['userEmail'];
+						$_SESSION['userName'] = $transaction['userName'];
+						$_SESSION['userSurname'] = $transaction['userSurname'];
+						$_SESSION['imagePath'] = $transaction['imagePath'];
 						header("Location: index.php");
-						ob_end_flush(); // Bu çağırma burada olmalıdır
+						ob_end_flush();
 						exit;
 					}
-				} else {
-					echo '<script>alert("UNCorrect UserEmail or PAssWord");</script>';
 				}
+			}
+			if ($checked == false) {
+				echo '<script>alert("UNCorrect UserEmail or PAssWord");</script>';
 			}
 		}
 		?>

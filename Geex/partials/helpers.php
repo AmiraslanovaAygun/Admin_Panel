@@ -11,7 +11,7 @@ function getTransactions(string $fileName): array
 
     $file = fopen($fileName, "r");
     $transactions = [];
-
+    fgetcsv($file);
     while (($transaction = fgetcsv($file)) !== false) {
         $transactions[] = extractTransactions($transaction);
     }
@@ -21,10 +21,13 @@ function getTransactions(string $fileName): array
 
 function extractTransactions(array $transaction): array
 {
-    [$userEmail, $password] = $transaction;
+    [$userName,$userSurname,$userEmail, $password,$imagePath] = $transaction;
 
     return [
+        'userName' => $userName,
+        'userSurname' => $userSurname,
         'userEmail' => $userEmail,
         'password' => $password,
+        'imagePath' =>  $imagePath,
     ];
 }

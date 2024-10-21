@@ -19,14 +19,14 @@ ob_start();
 					</div>
 					<form id="signInForm" class="geex-content__authentication__form" method="POST" action="signup.php">
 						<h2 class="geex-content__authentication__title">Sing Up Your Account 👋</h2>
-						<!-- <div class="geex-content__authentication__form-group">
+						<div class="geex-content__authentication__form-group">
 							<label for="name">Your Name</label>
 							<input type="text" id="name" name="name" placeholder="Enter Your Name" required>
 						</div>
 						<div class="geex-content__authentication__form-group">
 							<label for="name">Your Surname</label>
 							<input type="text" id="surname" name="surname" placeholder="Enter Your Surname" required>
-						</div> -->
+						</div>
 						<div class="geex-content__authentication__form-group">
 							<label for="emailSignIn">Your Email</label>
 							<input type="email" id="emailSignIn" name="emailSignIn" placeholder="Enter Your Email" required>
@@ -45,6 +45,10 @@ ob_start();
 							</div>
 							<input type="password" id="loginPassword" name="confirmPassword" placeholder="Password" required>
 							<i class="uil-eye toggle-password-type"></i>
+						</div>
+						<div class="geex-content__authentication__form-group">
+							<label for="file">Profile Picture</label>
+							<input type="file" id="file" name="profilePicture" required>
 						</div>
 						<div class="geex-content__authentication__form-group custom-checkbox">
 							<input type="checkbox" class="geex-content__authentication__checkbox-input" id="rememberMe">
@@ -69,11 +73,14 @@ ob_start();
 					</form>
 					<?php
 					if ($_SERVER["REQUEST_METHOD"] == "POST") {
+						$userName = trim(htmlspecialchars($_POST["name"]));
+						$userSurname = trim(htmlspecialchars($_POST["surname"]));
 						$userEmail = trim(htmlspecialchars($_POST["emailSignIn"]));
 						$password = trim(htmlspecialchars($_POST["loginPassword"]));
 						$confirmPassword = trim(htmlspecialchars($_POST["confirmPassword"]));
+						$imagePath = trim(htmlspecialchars($_POST["profilePicture"]));
 
-						if (empty($userEmail) || empty($password) || empty($confirmPassword)) {
+						if (empty($userEmail) || empty($password) || empty($confirmPassword) || empty($userName) || empty($userSurname)|| empty($imagePath)) {
 							trigger_error("All inputs are required!!!", E_USER_ERROR);
 						}
 						if ($password !== $confirmPassword) {
@@ -81,12 +88,18 @@ ob_start();
 						}
 
 						$data = [
+							'userName' => $userName,
+							'userSurname' => $userSurname,
 							'userEmail' => $userEmail,
 							'password' => password_hash($password, PASSWORD_DEFAULT),
+							'imagePath' =>  $imagePath,
 						];
 
-						$fileName = "data.csv";
-						$file = fopen($fileName, 'a');
+						$filePath = "data.csv";
+						$file = fopen($filePath, 'a');
+						if (filesize($filePath) == 0) {
+							fputcsv($file, ['userName', 'userSurname', 'userEmail', 'password', 'imagePath']);
+						}
 						fputcsv($file, $data);
 						fclose($file);
 						header("Location: signin.php");
